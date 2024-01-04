@@ -6,26 +6,22 @@ http.createServer((req, res) => {
     let url = req.url;
     // const content = (200, {'Content-Type': 'text/html'})
 
+    const displayFile = (page) => {
+        fs.readFile(page, (err, data) => {
+            res.writeHead(200, {'Content-Type': 'text/html'})
+            res.write(data)
+            return res.end()
+        })
+    }
+
     if (!(rootUrl.includes(url))) {
         res.end('<h1>Error 404!<h1/>')
     } else if (url === rootUrl[0]) {
-        fs.readFile('index.html', (err, data) => {
-            res.writeHead(200, {'Content-Type': 'text/html'})
-            res.write(data)
-            return res.end()
-        })
+        displayFile('index.html')
     } else if (url === rootUrl[1]) {
-        fs.readFile('about.html', (err, data) => {
-            res.writeHead(200, {'Content-Type': 'text/html'})
-            res.write(data)
-            return res.end()
-        })
+        displayFile('about.html')
     } else if (url === rootUrl[2]) {
-        fs.readFile('contact-me.html', (err, data) => {
-            res.writeHead(200, {'Content-Type': 'text/html'})
-            res.write(data)
-            return res.end()
-        })
+        displayFile('contact-me.html')
     }
 
 })
